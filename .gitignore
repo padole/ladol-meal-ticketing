@@ -1,0 +1,28 @@
+# frontend
+node_modules/
+dist/
+.vite/
+
+# backend
+.venv/
+__pycache__/
+*.pyc
+instance/
+# meal photos uploaded in Menu Management
+backend/uploads/
+
+# secrets / local config
+.env
+
+# editor
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# local data backups (may contain staff data)
+backend/database/backups/
+
+# unused leftovers (contain sample data with real staff names) - kept locally, never published
+frontend/src/_unused/

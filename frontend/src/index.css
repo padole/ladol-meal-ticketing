@@ -1,0 +1,705 @@
+/* ========================================================================== */
+/* LADOL Meal Ticketing styles. Sections: base, layout, dashboard, shared UI, */
+/* tables, forms & pop-ups, wallet, dining counters, toast, landing page. */
+/* ========================================================================== */
+
+/* ---- Base: colour variables, page background, links ---- */
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  --bg: #f4f6f9;
+  --card: #fff;
+  --tx: #1f2937;
+  --mut: #6b7280;
+  --bd: #e5e7eb;
+  --pri: #0d6efd;
+  --hd1: #0f2744;
+  --hd2: #1d4e89;
+  --soft: #f1f5f9;
+}
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--tx);
+  font-family: "Segoe UI", system-ui, Arial, sans-serif;
+  font-size: 14px;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+/* ---- Layout: top navbar, blue page header + breadcrumb, content width ---- */
+.nav {
+  background: var(--card);
+  border-bottom: 1px solid var(--bd);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.nav a {
+  margin-left: 16px;
+  color: var(--mut);
+}
+.nav a.out {
+  color: #dc2626;
+}
+.hdr {
+  background: linear-gradient(120deg, var(--hd1), var(--hd2));
+  color: #fff;
+  padding: 22px 24px;
+}
+.crumbs {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 6px;
+}
+.crumbs a:hover {
+  text-decoration: underline;
+}
+.hdr h2 {
+  margin: 0;
+  font-size: 20px;
+}
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 22px 16px;
+}
+/* ---- Dashboard: welcome banner and tiles ---- */
+.hero {
+  background:
+    linear-gradient(to left, rgba(15, 39, 68, 0.5), rgba(15, 39, 68, 0.05)),
+    url(/images/hero.jpg) center/cover no-repeat;
+  color: #fff;
+  padding: 80px 24px;
+  text-align: right;
+}
+.hero h2 {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+}
+.hero input {
+  width: 100%;
+  max-width: 420px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 0;
+  margin-top: 14px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+.tile {
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  transition: 0.2s;
+}
+.tile.on:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+  border-color: var(--pri);
+}
+.tile.off {
+  opacity: 0.55;
+  cursor: default;
+}
+.tile h4 {
+  margin: 0 0 6px;
+}
+.tile p {
+  margin: 0;
+  color: var(--mut);
+  font-size: 12px;
+}
+.tile .ic {
+  font-size: 28px;
+}
+/* ---- Shared UI: cards, toolbars, buttons ---- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 14px;
+  padding: 18px;
+}
+.bar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+input,
+select,
+textarea {
+  font: inherit;
+  color: var(--tx);
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-height: 42px;
+}
+.bar input {
+  flex: 1;
+  min-width: 200px;
+  max-width: 380px;
+}
+.btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--pri);
+  color: #fff;
+}
+.btn.dk {
+  background: #111827;
+}
+.btn.ol {
+  background: transparent;
+  color: var(--tx);
+  border: 1px solid var(--bd);
+}
+.btn.rd {
+  background: #fee2e2;
+  color: #dc2626;
+}
+/* ---- Tables, avatars and coloured status pills (Breakfast/Lunch/Dinner, ok/no/sch) ---- */
+.tw {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--mut);
+  padding: 10px;
+  border-bottom: 1px solid var(--bd);
+}
+td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--bd);
+  vertical-align: middle;
+}
+tr:hover td {
+  background: var(--soft);
+}
+.av {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  margin-right: 10px;
+  background: #475569;
+}
+.pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--soft);
+}
+.Breakfast {
+  background: #fef3c7;
+  color: #92400e;
+}
+.Lunch {
+  background: #dbeafe;
+  color: #1e40af;
+}
+.Dinner {
+  background: #f3e8ff;
+  color: #6b21a8;
+}
+.ok {
+  background: #dcfce7;
+  color: #166534;
+}
+.no {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.sch {
+  background: #e5e7eb;
+  color: #374151;
+}
+.ib {
+  border: 0;
+  background: var(--soft);
+  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  margin-right: 4px;
+}
+/* ---- Summary number cards ---- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.stats b {
+  font-size: 26px;
+  display: block;
+}
+/* ---- Login page ---- */
+.login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(120deg, var(--hd1), var(--hd2));
+  padding: 16px;
+}
+.login .card {
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+}
+.login input {
+  width: 100%;
+  margin-bottom: 12px;
+}
+.login .btn {
+  width: 100%;
+  padding: 13px;
+  margin-top: 6px;
+}
+/* ---- Forms (two-column grid) and pop-up dialogs ---- */
+.f2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+.f2 label {
+  font-size: 12px;
+  color: var(--mut);
+  display: block;
+}
+.f2 input,
+.f2 select,
+.f2 textarea {
+  width: 100%;
+}
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9;
+  padding: 16px;
+}
+.modal .card {
+  max-width: 380px;
+  text-align: center;
+  padding: 30px;
+}
+/* ---- Wallet page (green buttons, sticky green table header) ---- */
+.gr {
+  background: #2e7d32;
+}
+.wt th {
+  background: #2e7d32;
+  color: #fff;
+  font-size: 13px;
+  text-transform: none;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.wt td {
+  padding: 14px 10px;
+}
+/* ---- Dining counters (Today's Menu / Client Dining): top bar, tabs, filters, meal cards ---- */
+.dh {
+  height: 78px;
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  border-top: 2px solid #1428a0;
+  gap: 10px;
+}
+.dback {
+  font-size: 38px;
+  line-height: 1;
+  color: var(--tx);
+}
+.dwal {
+  background: #191919;
+  color: #fff;
+  border: 0;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+.dnav {
+  height: 40px;
+  background: #171717;
+  display: flex;
+  align-items: center;
+  padding-left: 5%;
+}
+.dnav a {
+  color: #fff;
+  padding: 0 28px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+}
+.dnav a.on {
+  background: #fff;
+  color: #111;
+}
+.don {
+  margin-left: auto;
+  margin-right: 5%;
+  background: #008d00;
+  color: #fff;
+  height: 40px;
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+.dmain {
+  max-width: 1400px;
+  margin: 25px auto;
+  padding: 0 25px;
+}
+.dhead {
+  background: var(--card);
+  padding: 24px 30px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.dhead h2 {
+  margin: 0;
+  font-size: 26px;
+}
+.dhead p {
+  margin: 5px 0 0;
+  color: var(--mut);
+}
+.dfil {
+  background: var(--card);
+  padding: 18px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 16px;
+  align-items: end;
+}
+.fl {
+  font-size: 12px;
+  color: var(--mut);
+  margin-bottom: 5px;
+}
+.dmt {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+.dmt button {
+  border: 0;
+  background: var(--soft);
+  color: var(--tx);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.dmt button.on {
+  background: #3765b5;
+  color: #fff;
+}
+.dgrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.dmeals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+.dmc {
+  background: var(--card);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: 0.25s;
+}
+.dmc:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.14);
+}
+.dimg {
+  position: relative;
+  height: 210px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 84px;
+  background: linear-gradient(135deg, #fde68a, #f97316);
+}
+.dimg i {
+  position: absolute;
+  top: 15px;
+  font-style: normal;
+  color: #fff;
+  padding: 7px 13px;
+  border-radius: 20px;
+  font-size: 11px;
+}
+.b1 {
+  left: 15px;
+  background: rgba(0, 0, 0, 0.75);
+}
+.b2 {
+  right: 15px;
+  background: #008d00;
+  font-weight: 600;
+  font-size: 10px !important;
+}
+.dbd {
+  padding: 20px;
+}
+.dt {
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.dd {
+  color: var(--mut);
+  font-size: 13px;
+  min-height: 40px;
+}
+.dp {
+  font-size: 19px;
+  font-weight: 700;
+}
+.dob {
+  background: #3765b5;
+  color: #fff;
+  border: 0;
+  width: 100%;
+  padding: 12px;
+  border-radius: 7px;
+  font-weight: 600;
+  margin-top: 15px;
+  cursor: pointer;
+}
+.dob:hover {
+  background: #244d95;
+}
+/* Small screens: stack the filters */
+@media (max-width: 992px) {
+  .dgrid,
+  .dfil {
+    grid-template-columns: 1fr;
+  }
+  .don {
+    display: none;
+  }
+}
+/* ---- Toast message and table footer ---- */
+.toast {
+  position: fixed;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  background: #166534;
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 10px;
+  z-index: 10;
+}
+.pg {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  color: var(--mut);
+  font-size: 12px;
+}
+/* ---- My Profile wallet card ---- */
+.wal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  border-left: 5px solid #2e7d32;
+}
+.wal .bal {
+  font-size: 32px;
+  font-weight: 800;
+  color: #2e7d32;
+  margin: 2px 0;
+}
+/* ---- Meal photos on cards + photo picker in Add/Edit meal ---- */
+.dimg {
+  overflow: hidden;
+}
+.dimg .dphoto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.dimg i {
+  z-index: 1;
+}
+.imgpick {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.imgpick .prev {
+  width: 160px;
+  height: 110px;
+  border-radius: 10px;
+  border: 1px dashed var(--bd);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--soft);
+  font-size: 40px;
+}
+.imgpick .prev img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* ---- Landing page (/) ---- */
+.land {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #1f2a44;
+}
+.land-top {
+  height: 70px;
+  flex: none;
+  background: #fff;
+  border-top: 2px solid #1428a0;
+  display: flex;
+  align-items: center;
+  padding: 0 5.5%;
+}
+.land-top img {
+  height: 44px;
+}
+.land-hero {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 13% 4%;
+  background:
+    linear-gradient(rgba(70, 80, 150, 0.28), rgba(40, 50, 110, 0.3)),
+    url(/images/hero.jpg) center/cover no-repeat;
+}
+.land-copy {
+  max-width: 600px;
+  text-align: right;
+  color: #fff;
+  margin-top: 12vh;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+.land-copy h1 {
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 700;
+  margin: 0 0 14px;
+  letter-spacing: -0.3px;
+}
+.land-copy p {
+  font-size: clamp(15px, 1.35vw, 19px);
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0 0 20px;
+}
+.land-copy button {
+  background: #3765b5;
+  color: #fff;
+  border: 0;
+  width: 210px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  transition: background 0.15s;
+}
+.land-copy button:hover {
+  background: #2b54a0;
+}
+.land-copy button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+@media (max-width: 700px) {
+  .land-hero {
+    justify-content: center;
+    padding: 24px 16px;
+    background-position: 30% center;
+  }
+  .land-copy {
+    text-align: center;
+    margin-top: 0;
+  }
+  .land-copy button {
+    width: 100%;
+    max-width: 280px;
+  }
+}

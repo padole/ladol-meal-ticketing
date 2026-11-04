@@ -1,0 +1,65 @@
+{
+  // Terminal > Run Task...  (or Ctrl+Shift+B for "Run: full stack")
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Setup: backend (venv + pip install)",
+      "type": "shell",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "windows": { "command": "if (!(Test-Path .venv)) { python -m venv .venv }; .venv\\Scripts\\python -m pip install -r requirements.txt; if (!(Test-Path .env)) { Copy-Item .env.example .env; Write-Host 'Created backend/.env - put your MySQL password in it.' }" },
+      "command": "[ -d .venv ] || python3 -m venv .venv; .venv/bin/python -m pip install -r requirements.txt; [ -f .env ] || cp .env.example .env",
+      "problemMatcher": []
+    },
+    {
+      "label": "Setup: frontend (npm install)",
+      "type": "shell",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "command": "npm install",
+      "problemMatcher": []
+    },
+    {
+      "label": "Setup: everything",
+      "dependsOn": ["Setup: backend (venv + pip install)", "Setup: frontend (npm install)"],
+      "problemMatcher": []
+    },
+    {
+      "label": "DB: create database + tables + sample data",
+      "type": "shell",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "windows": { "command": ".venv\\Scripts\\flask --app run init-db; if ($?) { .venv\\Scripts\\flask --app run seed }" },
+      "command": ".venv/bin/flask --app run init-db && .venv/bin/flask --app run seed",
+      "problemMatcher": []
+    },
+    {
+      "label": "DB: reset (drop everything and reseed)",
+      "type": "shell",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "windows": { "command": ".venv\\Scripts\\flask --app run reset-db" },
+      "command": ".venv/bin/flask --app run reset-db",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run: backend (Flask :5000)",
+      "type": "shell",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "windows": { "command": ".venv\\Scripts\\python run.py" },
+      "command": ".venv/bin/python run.py",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Run: frontend (Vite :5173)",
+      "type": "shell",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "command": "npm run dev",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Run: full stack",
+      "dependsOn": ["Run: backend (Flask :5000)", "Run: frontend (Vite :5173)"],
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": []
+    }
+  ]
+}
